@@ -77,3 +77,80 @@ docker ps
 브라우저에서 `http://localhost:8080` 접속하여 웹 페이지 렌더링 확인.
 
 **결과**: `docker ps`에서 `Up` 상태와 `0.0.0.0:8080->80/tcp` 포트 매핑을 확인했다. 브라우저에서 "내 첫 Docker 웹서버"라는 제목이 정상적으로 출력됨을 확인했다.
+
+### 3-5. 바인드 마운트 (Bind Mount)
+
+호스트의 특정 폴더를 컨테이너 내부 경로에 직접 연결하여, 호스트에서 파일을 수정하면 컨테이너에도 즉시 반영되는지 확인했다.
+
+**실행 명령**
+\`\`\`bash
+docker run -d -p 8080:80 --name my-web-bind -v $(pwd):/usr/share/nginx/html nginx:alpine
+\`\`\`
+
+**변경 전**
+- `index.html` 원본 내용을 브라우저에서 확인 (스크린샷: 링크)
+
+**호스트 파일 수정**
+\`\`\`bash
+echo "수정 테스트! 바로 반영되나요?" > index.html
+\`\`\`
+
+**변경 후**
+- 브라우저 새로고침 시 컨테이너 재시작 없이 즉시 변경 내용 반영 확인 (스크린샷: 링크)
+
+→ 바인드 마운트를 사용하면 컨테이너를 재빌드/재시작하지 않아도 호스트 파일 변경이 즉시 컨테이너에 반영됨을 확인했다.
+
+### 3-6. Docker 볼륨 (영속성)
+
+바인드 마운트는 호스트 폴더에 의존하지만, Docker 볼륨은 Docker가 관리하는 별도 저장 공간으로 컨테이너가 삭제되어도 데이터가 유지되는지 검증했다.
+
+**볼륨 생성 및 데이터 기록**
+\`\`\`bash
+docker run -it --name test -v my-data:/data ubuntu bash
+echo "does this data survive?" > /data/test.txt
+exit
+\`\`\`
+
+**컨테이너 삭제**
+\`\`\`bash
+docker rm test
+\`\`\`
+
+**새 컨테이너로 같은 볼륨 연결 후 데이터 확인**
+\`\`\`bash
+docker run -it --name test2 -v my-data:/data ubuntu bash
+cat /data/test.txt
+\`\`\`
+결과: `does this data survive?` 출력 확인
+
+→ 컨테이너(test)를 삭제해도 볼륨(my-data)에 저장된 데이터는 유지되며, 새 컨테이너(test2)에서 동일 볼륨을 연결하면 이전 데이터에 그대로 접근 가능함을 확인했다.
+
+### 3-7. Git 설정 및 GitHub 연동
+
+**Git 사용자 정보 설정**
+\`\`\`bash
+git config --global user.name "ynb0303"
+git config --global user.email "본인이메일"
+git config --global --list
+\`\`\`
+결과:
+\`\`\`
+user.name=ynb0303
+user.email=본인이메일
+\`\`\`
+
+**GitHub 연동**
+- VSCode에서 GitHub 계정(ynb0303)으로 로그인 완료 (스크린샷: 링크)
+- 원격 저장소(`ynb0303/Codyssey_Mission1`) 연결 및 push 완료
+\`\`\`bash
+git remote -v
+git push origin main
+\`\`\`
+
+## 4) 트러블슈팅
+
+| # | 문제 | 원인 가설 | 확인 | 해결/대안 |
+|---|---|---|---|---|
+| 1 | `docker ps-a` 명령이 `unknown command` 에러 | `-a` 옵션과 `ps` 사이 공백 누락 | `docker --help`로 옵션 구문 확인 | `docker ps -a`로 공백 추가하여 해결 |
+| 2 | `cat > Dockerfile << 'EOF'` 형태로 heredoc 붙여넣기 시 Dockerfile이 빈 파일로 생성되어 build 에러(`Dockerfile cannot be empty`) 발생 | 터미널 붙여넣기 과정에서 heredoc 종료 마커 인식이 깨짐 | `cat Dockerfile`로 내용이 비어있음을 확인 | `echo` 명령을 줄 단위로 나눠 실행(`>`, `>>`)하여 해결 |
+| 3 | 바인드 마운트용 컨테이너(`my-web-bind`)를 실행했으나 브라우저에 변경 사항이 반영되지 않음 | `docker ps -a` 확인 결과 상태가 `Created`(미실행)였음 — 포트 8080을 기존 컨테이너(`my-web-8080`)가 이미 점유해 실행 실패 | `docker ps -a`로 컨테이너 STATUS 확인 | 기존 컨테이너를 `docker rm -f`로 정리한 뒤 재실행하여 해결. 동일 포트를 여러 컨테이너가 동시에 쓸 수 없음을 확인 |
