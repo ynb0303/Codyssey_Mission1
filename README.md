@@ -158,7 +158,7 @@ git push origin main
 \`\`\`
 
 3-7. GitHub 연동 증거
-![GitHub 연동 화면](./screenshots/github-connect.webp)
+![GitHub 연동 화면] screenshots/github-connect.webp
 
 ## 4. 트러블슈팅
 
