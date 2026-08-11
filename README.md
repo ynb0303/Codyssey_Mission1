@@ -105,10 +105,10 @@ echo "수정 테스트! 바로 반영되나요?" > index.html
 
 바인드 마운트 (변경 전/후)
 **변경 전 (마운트 직후):**
-![바인드 마운트 변경 전](./screenshots/bind-mount-before.webp)
+![바인드 마운트 변경 전] (.screenshots/바인드 마운트 변경 전.webp)
 
 **변경 후:**
-![바인드 마운트 변경 후](./screenshots/port-mapping-and-bind-after.webp)
+![바인드 마운트 변경 후] (.screenshots/포트 매핑 접속 증거 + 바인드 마운트 변경 후.webp)
 
 ### 3-6. Docker 볼륨 (영속성)
 
@@ -158,7 +158,7 @@ git push origin main
 \`\`\`
 
 3-7. GitHub 연동 증거
-![GitHub 연동 화면](./screenshots/github-connect.webp)
+![GitHub 연동 화면] screenshots/github-connect.webp
 
 ## 4. 트러블슈팅
 
