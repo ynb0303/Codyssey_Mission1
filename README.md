@@ -93,7 +93,7 @@ ls -l index.html
 
 `ls -l` 출력에서 맨 앞 10글자(예: `-rw-r--r--`)로 확인할 수 있다.
 
-### 3-3. Dockerfile로 웹 서버 이미지 빌드
+### 3-4. Dockerfile로 웹 서버 이미지 빌드
 
 **목표**: nginx 기반 이미지 위에 정적 HTML 파일을 올려 나만의 웹 서버 이미지를 만든다.
 
@@ -124,7 +124,7 @@ docker build -t my-web .
 
 **결과**: `my-web` 이미지가 정상적으로 빌드되어 `docker images`로 확인됨.
 
-### 3-4. 포트 매핑으로 컨테이너 실행 및 접속 확인
+### 3-5. 포트 매핑으로 컨테이너 실행 및 접속 확인
 
 **목표**: 컨테이너 내부 웹 서버(80번 포트)를 호스트(내 컴퓨터)에서 접근 가능하게 연결한다.
 ```bash
@@ -159,7 +159,7 @@ lsof -i :8080
 포트가 이미 사용 중이라면 기존 컨테이너를 정리(`docker rm -f`)하거나, 
 다른 호스트 포트(예: `-p 8081:80`)로 변경해 실행할 수 있다.
 
-### 3-5. 바인드 마운트 (Bind Mount)
+### 3-6. 바인드 마운트 (Bind Mount)
 
 호스트의 특정 폴더를 컨테이너 내부 경로에 직접 연결하여, 호스트에서 파일을 수정하면 컨테이너에도 즉시 반영되는지 확인했다.
 
@@ -196,7 +196,7 @@ echo "수정 테스트! 바로 반영되나요?" > index.html
 
 ![바인드 마운트 변경 후](./screenshots/port-mapping-after.webp)
 
-### 3-6. Docker 볼륨 (영속성)
+### 3-7. Docker 볼륨 (영속성)
 
 바인드 마운트는 호스트 폴더에 의존하지만, Docker 볼륨은 Docker가 관리하는 별도 저장 공간으로 컨테이너가 삭제되어도 데이터가 유지되는지 검증했다.
 
@@ -233,7 +233,7 @@ docker run --rm -v my-data:/data -v $(pwd):/backup ubuntu tar czf /backup/my-dat
 이렇게 하면 `my-data-backup.tar.gz` 파일이 호스트의 현재 폴더에 생성되어, 필요할 때 
 새 볼륨에 다시 풀어(restore) 넣을 수 있다.
 
-### 3-7. Git 설정 및 GitHub 연동
+### 3-8. Git 설정 및 GitHub 연동
 
 **Git 사용자 정보 설정**
 \`\`\`bash
@@ -255,13 +255,13 @@ git remote -v
 git push origin main
 \`\`\`
 
-결과:
+**결과:**
 \`\`\`
 origin  https://github.com/ynb0303/Codyssey_Mission1.git (fetch)
 origin  https://github.com/ynb0303/Codyssey_Mission1.git (push)
 \`\`\`
 
-3-7. GitHub 연동 증거
+**3-8. GitHub 연동 증거**
 ![GitHub 연동 화면](./screenshots/github-connect.webp)
 
 ## 4. 트러블슈팅
