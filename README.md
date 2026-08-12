@@ -79,7 +79,7 @@ docker ps
 **결과**: `docker ps`에서 `Up` 상태와 `0.0.0.0:8080->80/tcp` 포트 매핑을 확인했다. 브라우저에서 "내 첫 Docker 웹서버"라는 제목이 정상적으로 출력됨을 확인했다.
 
 포트 매핑 접속 증거
-![Docker 스크린샷](docs/screenshots/Docker.webp)
+![Docker 스크린샷](https://github.com/ynb0303/Codyssey_Mission2/blob/main/docs/screenshots/Docker.webp?raw=true)
 
 ### 3-5. 바인드 마운트 (Bind Mount)
 
