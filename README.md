@@ -33,6 +33,15 @@ docker-mission/
 
 ### 3-1. 작업 디렉토리 준비
 
+**작업 정리 (삭제 확인)**
+\`\`\`bash
+touch temp.txt
+ls
+rm temp.txt
+ls
+\`\`\`
+결과: `temp.txt` 생성 후 `ls`로 확인, `rm`으로 삭제 후 다시 `ls`로 사라진 것을 확인했다.
+
 **목표**: 실습용 작업 공간을 별도 폴더로 분리해서 관리한다.
 
 ```bash
@@ -43,6 +52,7 @@ pwd
 ```
 
 **결과**: `/Users/yyangyn143681/Desktop/docker-mission` 경로에 작업 폴더가 생성됨을 확인했다.
+
 ### 3-2. Docker 설치 및 점검
 
 **목표**: 컨테이너를 실행할 수 있는 Docker 환경이 정상 동작하는지 확인한다.
@@ -52,6 +62,37 @@ docker ps
 docker images
 ```
 **결과**: Docker 28.5.2가 정상 설치되어 있음을 확인했다. `docker ps`로 실행 중인 컨테이너 목록을, `docker images`로 로컬에 저장된 이미지 목록을 확인했다.
+
+**hello-world 컨테이너 실행 확인**
+\`\`\`bash
+docker run hello-world
+\`\`\`
+결과: "Hello from Docker!" 메시지 출력으로 Docker 데몬과의 통신, 이미지 pull, 컨테이너 생성/실행까지 
+전 과정이 정상 동작함을 확인했다.
+
+### 3-3. 파일 권한 확인 및 변경
+
+### 참고: 파일 권한 확인 및 변경
+
+**목표**: 파일 권한을 확인하고 변경하는 방법을 실습한다.
+
+\`\`\`bash
+ls -l index.html
+chmod 644 index.html
+ls -l index.html
+\`\`\`
+결과: `-rw-r--r--`(644) 권한 확인.
+
+**권한 규칙 (rwx / 숫자 표기)**
+
+권한은 소유자(owner) / 그룹(group) / 기타(other) 세 그룹에 대해 각각 
+읽기(r=4) / 쓰기(w=2) / 실행(x=1) 권한을 부여하는 방식이다. 이 셋을 더해 숫자로 표기한다.
+
+- `755` = 소유자: rwx(7), 그룹: r-x(5), 기타: r-x(5) → 실행 파일/스크립트에 흔히 사용
+- `644` = 소유자: rw-(6), 그룹: r--(4), 기타: r--(4) → 일반 문서/설정 파일에 흔히 사용
+
+`ls -l` 출력에서 맨 앞 10글자(예: `-rw-r--r--`)로 확인할 수 있다.
+
 ### 3-3. Dockerfile로 웹 서버 이미지 빌드
 
 **목표**: nginx 기반 이미지 위에 정적 HTML 파일을 올려 나만의 웹 서버 이미지를 만든다.
@@ -106,6 +147,17 @@ docker ps
 포트 매핑 접속 증거
 
 ![Docker 스크린샷](https://github.com/ynb0303/Codyssey_Mission2/blob/main/docs/screenshots/Docker.webp?raw=true)
+
+**참고: 포트 점유 프로세스 확인**
+
+특정 포트가 이미 사용 중인지 확인하려면 `lsof`로 해당 포트를 점유한 프로세스를 조회할 수 있다.
+
+\`\`\`bash
+lsof -i :8080
+\`\`\`
+결과: OrbStack 프로세스가 8080 포트를 LISTEN 상태로 점유하고 있음을 확인했다. 
+포트가 이미 사용 중이라면 기존 컨테이너를 정리(`docker rm -f`)하거나, 
+다른 호스트 포트(예: `-p 8081:80`)로 변경해 실행할 수 있다.
 
 ### 3-5. 바인드 마운트 (Bind Mount)
 
@@ -201,6 +253,12 @@ user.email=본인이메일
 \`\`\`bash
 git remote -v
 git push origin main
+\`\`\`
+
+결과:
+\`\`\`
+origin  https://github.com/ynb0303/Codyssey_Mission1.git (fetch)
+origin  https://github.com/ynb0303/Codyssey_Mission1.git (push)
 \`\`\`
 
 3-7. GitHub 연동 증거
