@@ -202,7 +202,55 @@ my-web → 아까 만든 이미지 이름
 이제 브라우저 열고 주소창에: 
 http://localhost:8080
 
-결과 : 처음엔 글자가 깨져서 나타났지만, 수정 후 제대로 보임.
+결과 : 처음엔 글자가 깨져서 나타났지만, 
+
+https://claude.ai/api/da9e02e1-765c-4088-a914-db6c19cb0c21/files/4d2ad111-1329-49eb-a2b5-435e9ae4a9bd/preview
+
+수정 후 제대로 보임.
+
+>> 고치는 방법 : index.html 파일에 "이 파일은 UTF-8이야"라는 태그 한 줄을 추가
+
+VS Code로 열어볼게요:
+```bash
+code index.html
+```
+
+기존 내용을 전체 지우고 (Command+A → Delete), 아래 내용으로 통째로 바꿔주세요:
+```bash
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>내 첫 Docker 웹서버</h1>
+</body>
+</html>
+```
+
+<meta charset="UTF-8"> 이 한 줄이 핵심이에요. "이 문서는 UTF-8 방식으로 한글이 저장되어 있다"고 브라우저에게 알려주는 태그예요.
+
+저장 후 터미널로 돌아와서 :
+```bash
+cat index.html
+```
+
+입력 후 컨테이너 재시작 :
+```bash
+docker stop my-web-container
+docker rm my-web-container
+docker build -t my-web .
+docker run -d -p 8080:80 --name my-web-container my-web
+```
+
+1. stop → 지금 실행 중인 컨테이너 멈추기
+2. rm → 그 컨테이너 삭제 (이미지는 안 지워짐, 컨테이너만)
+3. build → 수정된 index.html로 이미지 새로 만들기
+4. run → 새 이미지로 컨테이너 다시 실행
+
+다 실행한 후 브라우저에서 localhost:8080 새로고침 -> 한글 제대로 나오는 것 확인!
+
+https://claude.ai/api/da9e02e1-765c-4088-a914-db6c19cb0c21/files/078568d4-9678-4c53-ae41-30d67fee04f2/preview
 
 추가 : (컨테이너 상태 확인/관리 명령어)
 ```bash
