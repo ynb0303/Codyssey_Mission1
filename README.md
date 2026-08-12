@@ -1,6 +1,6 @@
-### 프로젝트 구조
+# 프로젝트 구조
 
-​```
+​```bash
 docker-mission/
 ├── Dockerfile        # nginx 기반 이미지 빌드 정의
 ├── index.html        # 컨테이너에 복사되는 정적 웹 페이지
