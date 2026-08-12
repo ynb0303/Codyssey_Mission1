@@ -63,6 +63,7 @@ docker build -t my-web .
 - `.` (마침표) : 지금 있는 폴더에서 Dockerfile을 찾으라는 뜻
 
 **결과**: `my-web` 이미지가 정상적으로 빌드되어 `docker images`로 확인됨.
+
 ### 3-4. 포트 매핑으로 컨테이너 실행 및 접속 확인
 
 **목표**: 컨테이너 내부 웹 서버(80번 포트)를 호스트(내 컴퓨터)에서 접근 가능하게 연결한다.
@@ -79,6 +80,7 @@ docker ps
 **결과**: `docker ps`에서 `Up` 상태와 `0.0.0.0:8080->80/tcp` 포트 매핑을 확인했다. 브라우저에서 "내 첫 Docker 웹서버"라는 제목이 정상적으로 출력됨을 확인했다.
 
 포트 매핑 접속 증거
+
 ![Docker 스크린샷](https://github.com/ynb0303/Codyssey_Mission2/blob/main/docs/screenshots/Docker.webp?raw=true)
 
 ### 3-5. 바인드 마운트 (Bind Mount)
@@ -104,10 +106,13 @@ echo "수정 테스트! 바로 반영되나요?" > index.html
 → 바인드 마운트를 사용하면 컨테이너를 재빌드/재시작하지 않아도 호스트 파일 변경이 즉시 컨테이너에 반영됨을 확인했다.
 
 바인드 마운트 (변경 전/후)
+
 **변경 전 (마운트 직후):**
+
 ![바인드 마운트 변경 전](./screenshots/bind-mount-before.webp)
 
 **변경 후:**
+
 ![바인드 마운트 변경 후](./screenshots/port-mapping-after.webp)
 
 ### 3-6. Docker 볼륨 (영속성)
