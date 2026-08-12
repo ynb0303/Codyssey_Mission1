@@ -114,6 +114,8 @@ docker run hello-world
 
 >> "Hello from Docker!" 메세지 뜨는 것 확인.
 
+https://claude.ai/api/da9e02e1-765c-4088-a914-db6c19cb0c21/files/0728f386-e7ed-4a08-bc17-85e51b63974d/preview
+
 >> 이미지(image)와 컨테이너(container) 개념 차이
 
 이미지: 요리 레시피 (설계도)
