@@ -76,12 +76,14 @@ docker run hello-world
 
 **목표**: 파일 권한을 확인하고 변경하는 방법을 실습한다.
 
-\`\`\`bash
+```bash
 ls -l index.html
 chmod 644 index.html
 ls -l index.html
-\`\`\`
-결과: `-rw-r--r--`(644) 권한 확인.
+```
+
+**결과:**
+`-rw-r--r--`(644) 권한 확인.
 
 **권한 규칙 (rwx / 숫자 표기)**
 
