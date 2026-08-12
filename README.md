@@ -261,7 +261,7 @@ origin  https://github.com/ynb0303/Codyssey_Mission1.git (fetch)
 origin  https://github.com/ynb0303/Codyssey_Mission1.git (push)
 \`\`\`
 
-**3-8. GitHub 연동 증거**
+**GitHub 연동 증거**
 ![GitHub 연동 화면](./screenshots/github-connect.webp)
 
 ## 4. 트러블슈팅
